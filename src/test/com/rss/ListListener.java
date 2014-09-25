@@ -47,7 +47,6 @@ public class ListListener implements OnItemClickListener {
 			ContentFragment fragment = (ContentFragment)((TabletPage) activity)
 					.getSupportFragmentManager().findFragmentById(
 							R.id.content_fragment);
-			Log.d(TAG,"Calling content function");
 			fragment.showPageContent(url);
 		}
 	}

@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +31,7 @@ public class ContentFragment extends Fragment implements OnClickListener {
 	private Button btnMenu;
 	private Button btnClearCache;
 	private Button btnClearPageCache;
+	private Bundle webViewBundle;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -51,8 +53,15 @@ public class ContentFragment extends Fragment implements OnClickListener {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		Context context = getActivity();
+		Log.v(TAG, "Create fragment Content");
 
+		if (webViewBundle != null) {
+			content.restoreState(webViewBundle);
+		}
+		
+		setRetainInstance(true);
+
+		Context context = getActivity();
 		url = getActivity().getIntent().getStringExtra("url");
 		if (url != null) {
 			dbHandler = new DBContentHandler(context);
@@ -67,7 +76,14 @@ public class ContentFragment extends Fragment implements OnClickListener {
 			}
 			pd.dismiss();
 		}
+	}
 
+	@Override
+	public void onPause() {
+		super.onPause();
+		webViewBundle = new Bundle();
+		content.saveState(webViewBundle);
+		Log.v(TAG, "Save page Content");
 	}
 
 	public void showPageContent(String url) {
