@@ -1,13 +1,11 @@
 package test.com.rss.activity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import test.com.rss.ListListener;
 import test.com.rss.async.RssLinkLoader;
 import test.com.rss.db.DBLinkHandler;
 import test.com.rss.items.RssLinkItem;
-
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;

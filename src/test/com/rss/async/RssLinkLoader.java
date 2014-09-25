@@ -4,18 +4,14 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 import test.com.rss.db.DBLinkHandler;
 import test.com.rss.items.RssLinkItem;
+import test.com.rss.parser.RssLinkParser;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -25,11 +21,6 @@ import android.widget.ArrayAdapter;
 public class RssLinkLoader extends AsyncTask<String, Void, Void> {
 
 	private static final String TAG = "rss";
-
-	private static final String ITEM_TAG = "item";
-	private static final String LINK_TAG = "link";
-	private static final String PUBDATE_TAG = "pubDate";
-	private static final String TITLE_TAG = "title";
 
 	private ProgressDialog pd;
 	private Context context;
@@ -60,50 +51,24 @@ public class RssLinkLoader extends AsyncTask<String, Void, Void> {
 		ArrayList<RssLinkItem> items = new ArrayList<RssLinkItem>();
 		try {
 			URL url = new URL(args[0]);
+
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				InputStream is = conn.getInputStream();
 
-				DocumentBuilderFactory dbf = DocumentBuilderFactory
-						.newInstance();
-				DocumentBuilder db = dbf.newDocumentBuilder();
-
-				Document document = db.parse(is);
-				Element element = document.getDocumentElement();
-
-				NodeList nodeList = element.getElementsByTagName(ITEM_TAG);
-
-				if (nodeList.getLength() > 0) {
-					for (int i = 0; i < nodeList.getLength(); i++) {
-
-						Element entry = (Element) nodeList.item(i);
-
-						Element title = (Element) entry.getElementsByTagName(
-								TITLE_TAG).item(0);
-						Element pubDate = (Element) entry.getElementsByTagName(
-								PUBDATE_TAG).item(0);
-						Element link = (Element) entry.getElementsByTagName(
-								LINK_TAG).item(0);
-
-						String rssTitle = title.getFirstChild().getNodeValue();
-						Date rssPubDate = new Date(pubDate.getFirstChild()
-								.getNodeValue());
-						String rssLink = link.getFirstChild().getNodeValue();
-
-						RssLinkItem rssItem = new RssLinkItem(rssTitle, rssPubDate,
-								rssLink);
-
-						items.add(rssItem);
-					}
-					rssItems.clear();
-					rssItems.addAll(items);
-				}
+				SAXParserFactory factory = SAXParserFactory.newInstance();
+				SAXParser saxParser = factory.newSAXParser();
+				RssLinkParser parser = new RssLinkParser();
+				saxParser.parse(is, parser);
+		
+				rssItems.clear();
+				rssItems.addAll(parser.getItems());
 			}
 		} catch (Exception e) {
 			Log.e(TAG, "Unbale to get rss page info. " + e.getMessage());
 		}
-		Log.d(TAG, "Document processing finished...");	
+		Log.d(TAG, "Document processing finished...");
 		return null;
 	}
 
