@@ -3,48 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.97"
-        android:orientation="vertical" >
-
-        <WebView
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-
-    <LinearLayout
+    
+      <fragment
+        android:id="@+id/link_fragment"
+        android:name="test.com.rss.fragments.ContentFragment"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/btnMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:onClick="mainMenu"
-            android:text="@string/btnMenu" />
-
-        <Button
-            android:id="@+id/btnClearPageCache"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="clearPageCache"
-            android:text="@string/btnClearPageCache" />
-
-        <Button
-            android:id="@+id/btnClearCache"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="clearAllCache"
-            android:text="@string/btnClearAllPagesCache" 
-            
-            />
-
-    </LinearLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>

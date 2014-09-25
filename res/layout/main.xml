@@ -2,36 +2,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+
     <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/btnUpadte"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="@string/btnUpdate" />
+            android:layout_weight="1"
+            android:text="@string/btnUpdate" 
+            android:onClick="updateLinks"/>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <ListView
-            android:id="@+id/lstView"
+        <Button
+            android:id="@+id/btnTablet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp" >
-
-        </ListView>
+            android:layout_weight="1"
+            android:text="@string/btnTablet"
+            android:onClick="showTabletView" />
 
     </LinearLayout>
+
+    <fragment
+        android:id="@+id/link_fragment"
+        android:name="test.com.rss.fragments.MainMenuFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>

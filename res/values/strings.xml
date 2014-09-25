@@ -4,8 +4,11 @@
     <string name="app_name">RSSParser</string>
     <string name="btnUpdate">Update Items</string>
     <string name="btnMenu">Menu</string>
+    <string name="btnTablet">Tablet View</string>
     <string name="btnClearPageCache">Clear page cache</string>
     <string name="btnClearAllPagesCache">Clear all cache</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_tablet_page">TabletPage</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
