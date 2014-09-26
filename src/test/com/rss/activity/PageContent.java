@@ -10,11 +10,6 @@ public class PageContent extends FragmentActivity {
 
 	private static final String TAG = "rss";
 
-	/*
-	 * private WebView content; private String url; private DBContentHandler
-	 * dbHandler;
-	 */
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

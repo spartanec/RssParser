@@ -7,6 +7,7 @@ import test.com.rss.items.RssContentPage;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Toast;
@@ -58,11 +60,19 @@ public class ContentFragment extends Fragment implements OnClickListener {
 		if (webViewBundle != null) {
 			content.restoreState(webViewBundle);
 		}
-		
+
 		setRetainInstance(true);
 
 		Context context = getActivity();
 		url = getActivity().getIntent().getStringExtra("url");
+
+		if (url == null && webViewBundle == null) {
+			disableCacheButtons();
+			content.setBackgroundColor(Color.GRAY);
+		} else {
+			enableCacheButtons();
+		}
+
 		if (url != null) {
 			dbHandler = new DBContentHandler(context);
 
@@ -76,6 +86,16 @@ public class ContentFragment extends Fragment implements OnClickListener {
 			}
 			pd.dismiss();
 		}
+	}
+
+	private void disableCacheButtons() {
+		btnClearCache.setVisibility(View.INVISIBLE);
+		btnClearPageCache.setVisibility(View.INVISIBLE);
+	}
+
+	private void enableCacheButtons() {
+		btnClearCache.setVisibility(View.VISIBLE);
+		btnClearPageCache.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -101,6 +121,7 @@ public class ContentFragment extends Fragment implements OnClickListener {
 				content.loadData(page.getContent(), "text/html", "UTF-8");
 			}
 			pd.dismiss();
+			enableCacheButtons();
 		}
 	}
 

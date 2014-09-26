@@ -16,7 +16,6 @@ public class MainMenu extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.d(TAG,"Create new activity");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 	}
